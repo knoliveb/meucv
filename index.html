@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Klisman Nathan — Jornada Profissional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<!-- Sky -->
+<div class="sky-layer"></div>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Clouds -->
+<div class="clouds-layer" id="clouds"></div>
+
+<!-- City -->
+<div class="city-layer" id="city"></div>
+
+<!-- Ground -->
+<div class="ground-layer">
+  <div class="ground-top"></div>
+  <div class="ground-fill"></div>
+  <div class="path-line"></div>
+</div>
+
+<!-- Walking Avatar -->
+<div class="avatar-container" id="avatar" style="left:10%">
+  <div class="avatar" id="avatarFace">K</div>
+  <div class="avatar-label" id="avatarLabel">Sua jornada começa...</div>
+</div>
+
+<!-- Timeline Markers -->
+<div class="timeline-marker" id="tm-2014" style="left:15%"><div class="year">2014</div><div class="pin"></div><div class="event">Varejo · Goiânia</div></div>
+<div class="timeline-marker" id="tm-2020" style="left:30%"><div class="year">2020</div><div class="pin"></div><div class="event">Cartório · Segurança</div></div>
+<div class="timeline-marker" id="tm-2021" style="left:45%"><div class="year">2021</div><div class="pin"></div><div class="event">Engenharia · RH</div></div>
+<div class="timeline-marker" id="tm-2022" style="left:60%"><div class="year">2022</div><div class="pin"></div><div class="event">Recrutador · UFRA</div></div>
+<div class="timeline-marker" id="tm-2023" style="left:75%"><div class="year">2023</div><div class="pin"></div><div class="event">Assistente DP</div></div>
+<div class="timeline-marker" id="tm-2026" style="left:90%"><div class="year">2026</div><div class="pin"></div><div class="event">Novos horizontes</div></div>
+
+<!-- Canvas -->
+<canvas id="confetti-canvas"></canvas>
+
+<!-- Tooltip -->
+<div class="fun-fact-tooltip" id="funFactTip">
+  <div class="fun-fact-inner">
+    <div class="label">Você sabia?</div>
+    <div class="text" id="funFactText">Clique no ponto laranja para descobrir!</div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="toast-container" id="toastContainer"></div>
+
+<!-- ============================================================
+     HERO
+     ============================================================ -->
+<section class="hero" id="hero">
+  <div class="hero-badge">
+    <span class="pulse"></span>
+    Disponível para novas oportunidades
+  </div>
+  <h1 class="hero-name">
+    Klisman<br>Nathan<em>.</em>
+  </h1>
+  <p class="hero-tagline" id="heroTagline">
+    <span id="typewriterText"></span><span class="typewriter-cursor"></span>
+  </p>
+  <a class="scroll-down" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">
+    <div class="arrow">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+    </div>
+    Scroll Down
+  </a>
+</section>
+
+<!-- Spacer for scroll journey -->
+<div style="height: 30vh"></div>
+
+<!-- ============================================================
+     ABOUT
+     ============================================================ -->
+<section class="content-section" id="about">
+  <div class="content-card reveal">
+    <div class="section-tag"><span class="num">01</span> Perfil</div>
+    <h2 class="section-title">Entre <em>pessoas</em> e <em>processos</em>.</h2>
+    <p class="section-sub">Profissional com mais de uma década de experiência em rotinas administrativas, departamento pessoal e recrutamento — atualmente cursando Engenharia de Produção.</p>
+    <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:start;">
+      <p style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height:1.45; color:var(--text);">Atuo na intersecção entre pessoas e processos, transformando rotinas operacionais em fluxos otimizados, documentados e escaláveis.</p>
+      <div style="color:var(--text-2); font-size:14.5px; line-height:1.7;">
+        <p>Tenho experiência sólida em admissões, rescisões, controle de ponto, indicadores e elaboração de POPs e ITs. Movido por curiosidade técnica, transito naturalmente entre ferramentas analíticas — Excel/VBA, Power BI, SAP — e práticas humanizadas de gestão.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Spacer -->
+<div style="height: 20vh"></div>
+
+<!-- ============================================================
+     EXPERIENCE
+     ============================================================ -->
+<section class="content-section" id="exp">
+  <div class="content-card reveal">
+    <div class="section-tag"><span class="num">02</span> Trajetória</div>
+    <h2 class="section-title">Experiência <em>profissional</em>.</h2>
+    <p class="section-sub">Clique em qualquer card para expandir os detalhes da jornada.</p>
+    <div class="exp-list">
+
+      <article class="exp-card reveal" data-cat="rh">
+        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
+          <div>
+            <div class="exp-period">Abr 2023 — Dez 2025</div>
+            <div class="exp-duration">2a 8m</div>
+          </div>
+          <div>
+            <div class="exp-title">Assistente de Departamento Pessoal <span class="role-tag">CLT</span></div>
+            <div class="exp-company">Prefeitura Municipal de Canaã dos Carajás · PA</div>
+          </div>
+          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="exp-desc">
+          Apoio integral às rotinas de DP: admissões, rescisões, alterações contratuais, controle de férias, licenças e afastamentos. Lançamento e conferência de folhas de ponto. Organização de prontuários, arquivamento de atestados. Monitoramento de indicadores, elaboração de POPs e ITs, proposição de ações de melhoria.
+          <div class="exp-tags"><span>admissões</span><span>rescisões</span><span>folha-de-ponto</span><span>POPs</span><span>ITs</span><span>indicadores</span><span>melhoria-contínua</span></div>
+        </div>
+      </article>
+
+      <article class="exp-card reveal" data-cat="rh">
+        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
+          <div>
+            <div class="exp-period">Nov 2021 — Jan 2023</div>
+            <div class="exp-duration">1a 3m</div>
+          </div>
+          <div>
+            <div class="exp-title">Recrutador <span class="role-tag">CLT</span></div>
+            <div class="exp-company">MSA Recursos Humanos · Rio de Janeiro · RJ</div>
+          </div>
+          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="exp-desc">
+          Recrutamento assertivo: triagem curricular, entrevistas, follow-up, pareceres técnicos. Captação ativa, employer branding, cumprimento de cronogramas. Confecção de formulários, divulgação de vagas, suporte ao time de R&S.
+          <div class="exp-tags"><span>triagem</span><span>entrevistas</span><span>captação</span><span>pareceres</span><span>R&S</span><span>employer-branding</span></div>
+        </div>
+      </article>
+
+      <article class="exp-card reveal" data-cat="adm">
+        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
+          <div>
+            <div class="exp-period">Jan 2021 — Jun 2021</div>
+            <div class="exp-duration">6m</div>
+          </div>
+          <div>
+            <div class="exp-title">Assistente Administrativo II <span class="role-tag">CDD</span></div>
+            <div class="exp-company">Lyon Engenharia · Canaã dos Carajás · PA</div>
+          </div>
+          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="exp-desc">
+          Organização administrativa, relatórios, análise de dados, planilhas, cronogramas e apoio ao diagnóstico de produtividade.
+          <div class="exp-tags"><span>relatórios</span><span>planilhas</span><span>cronogramas</span><span>análise-de-dados</span></div>
+        </div>
+      </article>
+
+      <article class="exp-card reveal" data-cat="cartorio">
+        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
+          <div>
+            <div class="exp-period">Ago 2020 — Jan 2021</div>
+            <div class="exp-duration">6m</div>
+          </div>
+          <div>
+            <div class="exp-title">Escrevente Notarial <span class="role-tag">CLT</span></div>
+            <div class="exp-company">Cartório do 1º Ofício · Canaã dos Carajás · PA</div>
+          </div>
+          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="exp-desc">
+          Atendimento ao público, protocolos, escrituras públicas, autenticação de títulos, registros civis.
+          <div class="exp-tags"><span>atendimento</span><span>escrituras</span><span>registros-civis</span><span>protocolos</span></div>
+        </div>
+      </article>
+
+      <article class="exp-card reveal" data-cat="adm">
+        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
+          <div>
+            <div class="exp-period">Jan 2014 — Mar 2016</div>
+            <div class="exp-duration">2a 3m</div>
+          </div>
+          <div>
+            <div class="exp-title">Assistente Administrativo · Supply Chain <span class="role-tag">CLT</span></div>
+            <div class="exp-company">Cencosud Bretas · Goiânia · GO</div>
+          </div>
+          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
+            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="exp-desc">
+          Pedidos de compras, relatórios, planilhas, análise de indicadores. Gestão de estoque, cotações, follow-up com fornecedores, otimização de layout.
+          <div class="exp-tags"><span>supply-chain</span><span>gestão-de-estoque</span><span>cotações</span><span>indicadores</span><span>layout</span></div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Spacer -->
+<div style="height: 20vh"></div>
+
+<!-- ============================================================
+     SKILLS
+     ============================================================ -->
+<section class="content-section" id="skills">
+  <div class="content-card reveal">
+    <div class="section-tag"><span class="num">03</span> Stack</div>
+    <h2 class="section-title">Ferramentas <em>do dia a dia</em>.</h2>
+    <p class="section-sub">Conjunto de sistemas, plataformas e competências que utilizo para entregar resultados.</p>
+    <div class="skills-grid">
+      <div class="skill-group reveal">
+        <h4>Pacote Office <span class="group-count">04</span></h4>
+        <div class="group-desc">Produtividade · Documentação</div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Excel · VBA</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Word</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="88"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">PowerPoint</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="82"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Outlook</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="85"></div></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>Análise de Dados <span class="group-count">03</span></h4>
+        <div class="group-desc">Business Intelligence · ETL</div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Power BI</span><span class="skill-level">Básico</span></div><div class="skill-bar"><div class="skill-fill" data-level="45"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Power Query</span><span class="skill-level">Básico</span></div><div class="skill-bar"><div class="skill-fill" data-level="42"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Access</span><span class="skill-level">Básico</span></div><div class="skill-bar"><div class="skill-fill" data-level="40"></div></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>Sistemas Corporativos <span class="group-count">03</span></h4>
+        <div class="group-desc">ERPs · DP · Recrutamento</div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">SAP</span><span class="skill-level">Básico</span></div><div class="skill-bar"><div class="skill-fill" data-level="50"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Sistemas de DP</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="80"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Plataformas R&S</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="78"></div></div></div>
+      </div>
+      <div class="skill-group reveal">
+        <h4>Competências de Gestão <span class="group-count">04</span></h4>
+        <div class="group-desc">Operações · Pessoas · Processos</div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Departamento Pessoal</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="92"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Recrutamento & Seleção</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="85"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">POPs & ITs</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="82"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Indicadores & KPIs</span><span class="skill-level">Intermediário</span></div><div class="skill-bar"><div class="skill-fill" data-level="70"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     EDUCATION
+     ============================================================ -->
+<section class="content-section" id="edu">
+  <div class="content-card reveal">
+    <div class="section-tag"><span class="num">04</span> Formação</div>
+    <h2 class="section-title">Aprendizado <em>contínuo</em>.</h2>
+    <p class="section-sub">Do Ensino Médio à Engenharia de Produção — investindo em conhecimento técnico e gestão.</p>
+    <div class="edu-grid">
+      <div class="edu-card current reveal">
+        <div class="status"><span class="pulse"></span> Cursando — 6º Período</div>
+        <h3>Bacharelado em <em>Engenharia de Produção</em></h3>
+        <p class="institution">UFRA - Universidade Federal Rural da Amazônia · Campus de Parauapebas · PA</p>
+        <p style="color:var(--text-2); font-size:14px; line-height:1.6;">Aplicação prática de conceitos em análise de dados, processos e sistemas de gestão. Previsão de conclusão: 2026.</p>
+        <div class="period" style="margin-top:20px;">2022 — 2026</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="status">Concluído</div>
+        <h3>Técnico em <em>Segurança do Trabalho</em></h3>
+        <p class="institution">Universidade Católica de Brasília</p>
+        <p style="color:var(--text-2); font-size:14px; line-height:1.6;">NRs aplicáveis, prevenção de riscos, ergonomia, gestão de SST, acidentes de trabalho.</p>
+        <div class="period" style="margin-top:20px;">2019 — 2021</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="status">Concluído</div>
+        <h3>Técnico em <em>Recursos Humanos</em></h3>
+        <p class="institution">Universidade Paulista</p>
+        <p style="color:var(--text-2); font-size:14px; line-height:1.6;">Admissões, rescisões, treinamento, legislação trabalhista, organização, execução e controle.</p>
+        <div class="period" style="margin-top:20px;">2020 — 2021</div>
+      </div>
+      <div class="edu-card reveal">
+        <div class="status">Concluído</div>
+        <h3>Ensino Médio <em>Completo</em></h3>
+        <p class="institution">CEPI - Centro de Educação Profissional e Integral</p>
+        <div class="period" style="margin-top:20px;">Concluído</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     LANGUAGES
+     ============================================================ -->
+<section class="content-section" id="lang">
+  <div class="content-card reveal" style="padding:48px;">
+    <div class="section-tag"><span class="num">05</span> Idiomas</div>
+    <h2 class="section-title" style="margin-bottom:36px;">Comunicação <em>global</em>.</h2>
+    <div class="lang-grid">
+      <div class="lang-card reveal">
+        <div class="lang-head">
+          <span class="level-pill">Nativo</span>
+        </div>
+        <div class="name">PT</div>
+        <div class="level-bar"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div></div>
+      </div>
+      <div class="lang-card reveal">
+        <div class="lang-head">
+          <span class="level-pill">Básico</span>
+        </div>
+        <div class="name">EN</div>
+        <div class="level-bar"><div class="on"></div><div class="on"></div><div></div><div></div><div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     INTERESTS
+     ============================================================ -->
+<section class="content-section" id="interests">
+  <div class="content-card reveal">
+    <div class="section-tag"><span class="num">06</span> Interesses</div>
+    <h2 class="section-title">O que me <em>move</em>.</h2>
+    <p class="section-sub">Além da rotina, assuntos que acompanho e me inspiram.</p>
+    <div class="interests-cloud reveal">
+      <span class="pill">Tecnologia</span>
+      <span class="pill">Programação</span>
+      <span class="pill">Inovação</span>
+      <span class="pill">Cultura</span>
+      <span class="pill">Política</span>
+      <span class="pill">Economia</span>
+      <span class="pill">Saúde</span>
+      <span class="pill">Qualidade de Vida</span>
+      <span class="pill">Meio Ambiente</span>
+      <span class="pill">Sustentabilidade</span>
+      <span class="pill">Direitos Humanos</span>
+    </div>
+    <div class="curiosities-grid reveal">
+      <div class="curiosity-card" data-fact="0">
+        <div class="c-front">
+          <div class="c-icon">&#128640;</div>
+          <div class="c-title">Mudança de estado</div>
+          <div class="c-hint">Clique para revelar &rarr;</div>
+        </div>
+        <div class="c-back"><p>Mudei de <strong>Goiás</strong> para o <strong>Pará</strong> em busca de novas oportunidades. A distância? <strong>1.800 km</strong>. A coragem? Ilimitada.</p></div>
+      </div>
+      <div class="curiosity-card" data-fact="1">
+        <div class="c-front">
+          <div class="c-icon">&#128200;</div>
+          <div class="c-title">Primeira função</div>
+          <div class="c-hint">Clique para revelar &rarr;</div>
+        </div>
+        <div class="c-back"><p>Meu primeiro emprego foi no <strong>varejo</strong> aos 18 anos. De repositor a gestão de estoque: aprendi que toda carreira começa com <strong>atitude</strong>.</p></div>
+      </div>
+      <div class="curiosity-card" data-fact="2">
+        <div class="c-front">
+          <div class="c-icon">&#129504;</div>
+          <div class="c-title">Aprendizado contínuo</div>
+          <div class="c-hint">Clique para revelar &rarr;</div>
+        </div>
+        <div class="c-back"><p>Estudo <strong>Engenharia de Produção</strong> enquanto trabalho em DP. Meu segredo? Acordar às <strong>5h</strong> para ter tempo de tudo.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<section class="content-section" id="contact" style="padding-top:80px; padding-bottom:140px;">
+  <div class="contact-card reveal" style="max-width:720px; margin:0 auto;">
+    <div class="contact-inner">
+      <div>
+        <div class="section-tag"><span class="num">07</span> Contato</div>
+        <h2>Vamos <em>conversar</em>?</h2>
+        <p style="color:var(--text-2); font-size:14.5px; line-height:1.6;">Aberto a oportunidades em gestão de pessoas, engenharia de produção e projetos de otimização.</p>
+      </div>
+      <div class="contact-list" style="margin-top:8px;">
+        <a href="mailto:klisman.silva@ufra.edu.br" class="contact-item" target="_blank">
+          <div><div class="label">E-mail</div><div class="val">klisman.silva@ufra.edu.br</div></div>
+          <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+        </a>
+        <a href="https://wa.me/5594991512585" class="contact-item" target="_blank">
+          <div><div class="label">WhatsApp</div><div class="val">+55 (94) 99151-2585</div></div>
+          <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+        </a>
+        <a href="https://www.linkedin.com/in/klisman-nathan" class="contact-item" target="_blank">
+          <div><div class="label">LinkedIn</div><div class="val">linkedin.com/in/klisman-nathan</div></div>
+          <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+        </a>
+        <a href="#" class="contact-item" onclick="spawnConfettiCenter(); return false;">
+          <div><div class="label">Localização</div><div class="val">Canaã dos Carajás · PA, Brasil</div></div>
+          <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer>
+  &copy; 2025 Klisman Nathan <span>&middot;</span> Construído com dedicação & propósito
+</footer>
+
+<!-- ============================================================
+     BOTTOM NAV
+     ============================================================ -->
+<nav class="bottom-nav" id="bottomNav">
+  <a href="#hero" data-section="hero" class="active">Início</a>
+  <a href="#about" data-section="about">Perfil</a>
+  <a href="#exp" data-section="exp">Experiência</a>
+  <a href="#skills" data-section="skills">Skills</a>
+  <a href="#edu" data-section="edu">Formação</a>
+  <a href="#contact" data-section="contact">Contato</a>
+</nav>
+
+<script src="script.js"></script>
+</body>
+</html>
