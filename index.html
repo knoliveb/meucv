@@ -8,49 +8,36 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Instrument+Serif&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
+<script>
+  // Apply theme as early as possible to avoid flash of incorrect theme
+  (function(){
+    try{
+      var saved = localStorage.getItem('theme');
+      if(saved === 'light' || saved === 'dark'){
+        document.documentElement.setAttribute('data-theme', saved);
+      } else {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    } catch(e){
+      document.documentElement.setAttribute('data-theme', 'dark');
+    }
+  })();
+</script>
 </head>
 <body>
 
-<!-- Scroll Progress -->
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<!-- Sky -->
 <div class="sky-layer"></div>
 
-<!-- Stars -->
 <div class="stars" id="stars"></div>
 
-<!-- Clouds -->
 <div class="clouds-layer" id="clouds"></div>
 
-<!-- City -->
 <div class="city-layer" id="city"></div>
 
-<!-- Ground -->
-<div class="ground-layer">
-  <div class="ground-top"></div>
-  <div class="ground-fill"></div>
-  <div class="path-line"></div>
-</div>
-
-<!-- Walking Avatar -->
-<div class="avatar-container" id="avatar" style="left:10%">
-  <div class="avatar" id="avatarFace">K</div>
-  <div class="avatar-label" id="avatarLabel">Sua jornada começa...</div>
-</div>
-
-<!-- Timeline Markers -->
-<div class="timeline-marker" id="tm-2014" style="left:15%"><div class="year">2014</div><div class="pin"></div><div class="event">Varejo · Goiânia</div></div>
-<div class="timeline-marker" id="tm-2020" style="left:30%"><div class="year">2020</div><div class="pin"></div><div class="event">Cartório · Segurança</div></div>
-<div class="timeline-marker" id="tm-2021" style="left:45%"><div class="year">2021</div><div class="pin"></div><div class="event">Engenharia · RH</div></div>
-<div class="timeline-marker" id="tm-2022" style="left:60%"><div class="year">2022</div><div class="pin"></div><div class="event">Recrutador · UFRA</div></div>
-<div class="timeline-marker" id="tm-2023" style="left:75%"><div class="year">2023</div><div class="pin"></div><div class="event">Assistente DP</div></div>
-<div class="timeline-marker" id="tm-2026" style="left:90%"><div class="year">2026</div><div class="pin"></div><div class="event">Novos horizontes</div></div>
-
-<!-- Canvas -->
 <canvas id="confetti-canvas"></canvas>
 
-<!-- Tooltip -->
 <div class="fun-fact-tooltip" id="funFactTip">
   <div class="fun-fact-inner">
     <div class="label">Você sabia?</div>
@@ -58,12 +45,8 @@
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast-container" id="toastContainer"></div>
 
-<!-- ============================================================
-     HERO
-     ============================================================ -->
 <section class="hero" id="hero">
   <div class="hero-badge">
     <span class="pulse"></span>
@@ -72,6 +55,11 @@
   <h1 class="hero-name">
     Klisman<br>Nathan<em>.</em>
   </h1>
+
+  <div class="dot-flyer" id="dotFlyer">
+    <div class="dot-trail"></div>
+  </div>
+
   <p class="hero-tagline" id="heroTagline">
     <span id="typewriterText"></span><span class="typewriter-cursor"></span>
   </p>
@@ -83,149 +71,157 @@
   </a>
 </section>
 
-<!-- Spacer for scroll journey -->
 <div style="height: 30vh"></div>
 
-<!-- ============================================================
-     ABOUT
-     ============================================================ -->
 <section class="content-section" id="about">
   <div class="content-card reveal">
     <div class="section-tag"><span class="num">01</span> Perfil</div>
-    <h2 class="section-title">Entre <em>pessoas</em> e <em>processos</em>.</h2>
-    <p class="section-sub">Profissional com mais de uma década de experiência em rotinas administrativas, departamento pessoal e recrutamento — atualmente cursando Engenharia de Produção.</p>
+    <h2 class="section-title">Resultados = <em>pessoas</em> + <em>processos</em></h2>
+    <p class="section-sub">Resultados consistentes nascem da combinação certa entre pessoas engajadas e processos bem estruturados.</p>
     <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:start;">
-      <p style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height:1.45; color:var(--text);">Atuo na intersecção entre pessoas e processos, transformando rotinas operacionais em fluxos otimizados, documentados e escaláveis.</p>
+      <p style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height:1.45; color:var(--text);">Muitas empresas possuem ferramentas avançadas, mas a falta de sintonia entre a tecnologia e o capital humano gera processos engessados e resultados ineficientes.</p>
       <div style="color:var(--text-2); font-size:14.5px; line-height:1.7;">
-        <p>Tenho experiência sólida em admissões, rescisões, controle de ponto, indicadores e elaboração de POPs e ITs. Movido por curiosidade técnica, transito naturalmente entre ferramentas analíticas — Excel/VBA, Power BI, SAP — e práticas humanizadas de gestão.</p>
+        <p>Na prática, é exatamente nessa lacuna que eu atuo. Utilizo minha base em Recursos Humanos e Engenharia de Produção para dar propósito às ferramentas analíticas, criando a sintonia necessária para destravar processos, padronizar rotinas e transformar tecnologia em eficiência real.</p>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Spacer -->
 <div style="height: 20vh"></div>
 
-<!-- ============================================================
-     EXPERIENCE
-     ============================================================ -->
 <section class="content-section" id="exp">
-  <div class="content-card reveal">
-    <div class="section-tag"><span class="num">02</span> Trajetória</div>
-    <h2 class="section-title">Experiência <em>profissional</em>.</h2>
-    <p class="section-sub">Clique em qualquer card para expandir os detalhes da jornada.</p>
-    <div class="exp-list">
+  <div class="exp-head-wrap">
+    <div class="content-card-head reveal">
+      <div class="section-tag"><span class="num">02</span> Trajetória</div>
+      <h2 class="section-title">Experiência <em>profissional</em>.</h2>
+      <p class="section-sub" style="margin-bottom:0;">Role para percorrer a linha do tempo. Cada parada é uma posição que ocupei.</p>
+    </div>
 
-      <article class="exp-card reveal" data-cat="rh">
-        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
-          <div>
-            <div class="exp-period">Abr 2023 — Dez 2025</div>
-            <div class="exp-duration">2a 8m</div>
-          </div>
-          <div>
-            <div class="exp-title">Assistente de Departamento Pessoal <span class="role-tag">CLT</span></div>
-            <div class="exp-company">Prefeitura Municipal de Canaã dos Carajás · PA</div>
-          </div>
-          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-        </div>
-        <div class="exp-desc">
-          Apoio integral às rotinas de DP: admissões, rescisões, alterações contratuais, controle de férias, licenças e afastamentos. Lançamento e conferência de folhas de ponto. Organização de prontuários, arquivamento de atestados. Monitoramento de indicadores, elaboração de POPs e ITs, proposição de ações de melhoria.
-          <div class="exp-tags"><span>admissões</span><span>rescisões</span><span>folha-de-ponto</span><span>POPs</span><span>ITs</span><span>indicadores</span><span>melhoria-contínua</span></div>
-        </div>
-      </article>
+    <div class="filter-bar reveal">
+      <button class="filter active" data-filter="all">All</button>
+      <button class="filter" data-filter="rh">RH & DP</button>
+      <button class="filter" data-filter="adm">Administrativo</button>
+      <button class="filter" data-filter="cartorio">Cartorial</button>
+    </div>
+  </div>
 
-      <article class="exp-card reveal" data-cat="rh">
-        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
-          <div>
-            <div class="exp-period">Nov 2021 — Jan 2023</div>
-            <div class="exp-duration">1a 3m</div>
-          </div>
-          <div>
-            <div class="exp-title">Recrutador <span class="role-tag">CLT</span></div>
-            <div class="exp-company">MSA Recursos Humanos · Rio de Janeiro · RJ</div>
-          </div>
-          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-        </div>
-        <div class="exp-desc">
-          Recrutamento assertivo: triagem curricular, entrevistas, follow-up, pareceres técnicos. Captação ativa, employer branding, cumprimento de cronogramas. Confecção de formulários, divulgação de vagas, suporte ao time de R&S.
-          <div class="exp-tags"><span>triagem</span><span>entrevistas</span><span>captação</span><span>pareceres</span><span>R&S</span><span>employer-branding</span></div>
-        </div>
-      </article>
+  <div class="exp-scroll-wrapper" id="expScrollWrapper">
+    <div class="exp-scroll-sticky">
 
-      <article class="exp-card reveal" data-cat="adm">
-        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
-          <div>
-            <div class="exp-period">Jan 2021 — Jun 2021</div>
-            <div class="exp-duration">6m</div>
-          </div>
-          <div>
-            <div class="exp-title">Assistente Administrativo II <span class="role-tag">CDD</span></div>
-            <div class="exp-company">Lyon Engenharia · Canaã dos Carajás · PA</div>
-          </div>
-          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-        </div>
-        <div class="exp-desc">
-          Organização administrativa, relatórios, análise de dados, planilhas, cronogramas e apoio ao diagnóstico de produtividade.
-          <div class="exp-tags"><span>relatórios</span><span>planilhas</span><span>cronogramas</span><span>análise-de-dados</span></div>
-        </div>
-      </article>
+      <div class="exp-track-viewport">
+        <div class="exp-track" id="expTrack">
 
-      <article class="exp-card reveal" data-cat="cartorio">
-        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
-          <div>
-            <div class="exp-period">Ago 2020 — Jan 2021</div>
-            <div class="exp-duration">6m</div>
-          </div>
-          <div>
-            <div class="exp-title">Escrevente Notarial <span class="role-tag">CLT</span></div>
-            <div class="exp-company">Cartório do 1º Ofício · Canaã dos Carajás · PA</div>
-          </div>
-          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
-        </div>
-        <div class="exp-desc">
-          Atendimento ao público, protocolos, escrituras públicas, autenticação de títulos, registros civis.
-          <div class="exp-tags"><span>atendimento</span><span>escrituras</span><span>registros-civis</span><span>protocolos</span></div>
-        </div>
-      </article>
+          <article class="exp-card" data-cat="rh" data-year="2025">
+            <div class="card-top">
+              <span class="card-index"><span class="num">03</span> / 05</span>
+              <span class="duration">2a 8m</span>
+            </div>
+            <div class="period">Abr 2023 — Dez 2025</div>
+            <h3>Assistente de Departamento Pessoal <span class="role-tag">CTD</span></h3>
+            <div class="company">Prefeitura Municipal de Canaã dos Carajás · PA</div>
+            <div class="desc">
+              Apoio integral às rotinas de DP: admissões, rescisões, alterações contratuais, controle de férias, licenças e afastamentos. Lançamento e conferência de folhas de ponto. Organização de prontuários, arquivamento de atestados. Monitoramento de indicadores, elaboração de POPs e ITs, proposição de ações de melhoria contínua.
+            </div>
+            <div class="exp-tags">
+              <span>admissões</span><span>rescisões</span><span>folha-de-ponto</span><span>POPs</span><span>ITs</span><span>indicadores</span>
+            </div>
+          </article>
 
-      <article class="exp-card reveal" data-cat="adm">
-        <div class="exp-head" onclick="this.closest('.exp-card').classList.toggle('open')">
-          <div>
-            <div class="exp-period">Jan 2014 — Mar 2016</div>
-            <div class="exp-duration">2a 3m</div>
-          </div>
-          <div>
-            <div class="exp-title">Assistente Administrativo · Supply Chain <span class="role-tag">CLT</span></div>
-            <div class="exp-company">Cencosud Bretas · Goiânia · GO</div>
-          </div>
-          <button class="exp-toggle" onclick="event.stopPropagation(); this.closest('.exp-card').classList.toggle('open')">
-            <svg width="12" height="12" viewBox="0 0 14 14" fill="none"><path d="M7 1V13M1 7H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-          </button>
+          <article class="exp-card" data-cat="rh" data-year="2023">
+            <div class="card-top">
+              <span class="card-index"><span class="num">02</span> / 05</span>
+              <span class="duration">1a 3m</span>
+            </div>
+            <div class="period">Nov 2021 — Jan 2023</div>
+            <h3>Recrutador <span class="role-tag">CLT</span></h3>
+            <div class="company">MSA Recursos Humanos · Rio de Janeiro · RJ</div>
+            <div class="desc">
+              Recrutamento assertivo: triagem curricular, entrevistas, follow-up, pareceres técnicos. Captação ativa via plataformas internas e externas, employer branding, cumprimento de cronogramas com foco em prazos. Confecção de formulários, alinhamento de perfil de vaga, divulgação de vagas, suporte ao time de R&S.
+            </div>
+            <div class="exp-tags">
+              <span>triagem</span><span>entrevistas</span><span>captação</span><span>pareceres</span><span>R&S</span><span>employer-branding</span>
+            </div>
+          </article>
+
+          <article class="exp-card" data-cat="adm" data-year="2021">
+            <div class="card-top">
+              <span class="card-index"><span class="num">03</span> / 05</span>
+              <span class="duration">6m</span>
+            </div>
+            <div class="period">Jan 2021 — Jun 2021</div>
+            <h3>Assistente Administrativo II <span class="role-tag">CDD</span></h3>
+            <div class="company">Lyon Engenharia · Canaã dos Carajás · PA</div>
+            <div class="desc">
+              Organização das rotinas administrativas, geração de relatórios e análise de dados, elaboração de planilhas, gestão de cronogramas e apoio ao diagnóstico técnico de produtividade. Ordenação e arquivamento de documentos.
+            </div>
+            <div class="exp-tags">
+              <span>relatórios</span><span>planilhas</span><span>cronogramas</span><span>análise-de-dados</span>
+            </div>
+          </article>
+
+          <article class="exp-card" data-cat="cartorio" data-year="2020">
+            <div class="card-top">
+              <span class="card-index"><span class="num">04</span> / 05</span>
+              <span class="duration">6m</span>
+            </div>
+            <div class="period">Ago 2020 — Jan 2021</div>
+            <h3>Escrevente Notarial <span class="role-tag">CLT</span></h3>
+            <div class="company">Cartório do 1º Ofício · Canaã dos Carajás · PA</div>
+            <div class="desc">
+              Atendimento ao público em rotinas cartoriais, com responsabilidade por protocolos, escrituras públicas, autenticação de títulos, lavraturas e registros de compra e venda de imóveis, nascimento, casamento e óbito.
+            </div>
+            <div class="exp-tags">
+              <span>atendimento</span><span>escrituras</span><span>registros-civis</span><span>protocolos</span>
+            </div>
+          </article>
+
+          <article class="exp-card" data-cat="adm" data-year="2014">
+            <div class="card-top">
+              <span class="card-index"><span class="num">05</span> / 05</span>
+              <span class="duration">2a 3m</span>
+            </div>
+            <div class="period">Jan 2014 — Mar 2016</div>
+            <h3>Assistente Administrativo · Supply Chain <span class="role-tag">CTD</span></h3>
+            <div class="company">Cencosud Bretas · Goiânia · GO</div>
+            <div class="desc">
+              Pedidos de compras, extração e geração de relatórios a partir de dados sistêmicos, confecção de planilhas e análise dos principais indicadores. Gestão de estoque, cotações, follow-up com fornecedores, atendimento. Acompanhamento e direcionamento da equipe na organização do estoque, otimização do layout do depósito.
+            </div>
+            <div class="exp-tags">
+              <span>supply-chain</span><span>gestão-de-estoque</span><span>cotações</span><span>indicadores</span><span>layout</span>
+            </div>
+          </article>
+
         </div>
-        <div class="exp-desc">
-          Pedidos de compras, relatórios, planilhas, análise de indicadores. Gestão de estoque, cotações, follow-up com fornecedores, otimização de layout.
-          <div class="exp-tags"><span>supply-chain</span><span>gestão-de-estoque</span><span>cotações</span><span>indicadores</span><span>layout</span></div>
+      </div>
+
+      <div class="timeline-rail">
+        <div class="rail-track">
+          <div class="rail-progress" id="railProgress"></div>
+          <div class="rail-playhead" id="railPlayhead"></div>
+          <div class="rail-markers" id="railMarkers"></div>
+
+          <div class="avatar-container" id="avatar">
+            <div class="avatar" id="avatarFace">K</div>
+            <div class="avatar-label" id="avatarLabel">Sua jornada começa...</div>
+          </div>
         </div>
-      </article>
+        <div class="rail-meta">
+          <span class="scroll-hint">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M7 1v12M3 8l4 4 4-4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+            Role para avançar
+          </span>
+          <span class="counter-bg"><span class="now" id="cardCounterNow">01</span> / <span id="cardCounterTotal">05</span></span>
+        </div>
+      </div>
 
     </div>
   </div>
 </section>
 
-<!-- Spacer -->
 <div style="height: 20vh"></div>
 
-<!-- ============================================================
-     SKILLS
-     ============================================================ -->
 <section class="content-section" id="skills">
   <div class="content-card reveal">
     <div class="section-tag"><span class="num">03</span> Stack</div>
@@ -235,7 +231,7 @@
       <div class="skill-group reveal">
         <h4>Pacote Office <span class="group-count">04</span></h4>
         <div class="group-desc">Produtividade · Documentação</div>
-        <div class="skill"><div class="skill-row"><span class="skill-name">Excel · VBA</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div>
+        <div class="skill"><div class="skill-row"><span class="skill-name">Excel</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="90"></div></div></div>
         <div class="skill"><div class="skill-row"><span class="skill-name">Word</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="88"></div></div></div>
         <div class="skill"><div class="skill-row"><span class="skill-name">PowerPoint</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="82"></div></div></div>
         <div class="skill"><div class="skill-row"><span class="skill-name">Outlook</span><span class="skill-level">Avançado</span></div><div class="skill-bar"><div class="skill-fill" data-level="85"></div></div></div>
@@ -266,78 +262,54 @@
   </div>
 </section>
 
-<!-- ============================================================
-     EDUCATION
-     ============================================================ -->
 <section class="content-section" id="edu">
   <div class="content-card reveal">
-    <div class="section-tag"><span class="num">04</span> Formação</div>
+    <div class="section-tag"><span class="num">05</span> Formação</div>
     <h2 class="section-title">Aprendizado <em>contínuo</em>.</h2>
-    <p class="section-sub">Do Ensino Médio à Engenharia de Produção — investindo em conhecimento técnico e gestão.</p>
+    <p class="section-sub">Aprimoramento técnico e gestão.</p>
     <div class="edu-grid">
       <div class="edu-card current reveal">
-        <div class="status"><span class="pulse"></span> Cursando — 6º Período</div>
+        <div class="status"><span class="pulse"></span> Ensino Superior — Cursando</div>
         <h3>Bacharelado em <em>Engenharia de Produção</em></h3>
         <p class="institution">UFRA - Universidade Federal Rural da Amazônia · Campus de Parauapebas · PA</p>
-        <p style="color:var(--text-2); font-size:14px; line-height:1.6;">Aplicação prática de conceitos em análise de dados, processos e sistemas de gestão. Previsão de conclusão: 2026.</p>
-        <div class="period" style="margin-top:20px;">2022 — 2026</div>
+        <div class="period" style="margin-top:20px;">2022 — 2027</div>
       </div>
       <div class="edu-card reveal">
-        <div class="status">Concluído</div>
-        <h3>Técnico em <em>Segurança do Trabalho</em></h3>
-        <p class="institution">Universidade Católica de Brasília</p>
-        <p style="color:var(--text-2); font-size:14px; line-height:1.6;">NRs aplicáveis, prevenção de riscos, ergonomia, gestão de SST, acidentes de trabalho.</p>
-        <div class="period" style="margin-top:20px;">2019 — 2021</div>
-      </div>
-      <div class="edu-card reveal">
-        <div class="status">Concluído</div>
-        <h3>Técnico em <em>Recursos Humanos</em></h3>
-        <p class="institution">Universidade Paulista</p>
-        <p style="color:var(--text-2); font-size:14px; line-height:1.6;">Admissões, rescisões, treinamento, legislação trabalhista, organização, execução e controle.</p>
-        <div class="period" style="margin-top:20px;">2020 — 2021</div>
-      </div>
-      <div class="edu-card reveal">
-        <div class="status">Concluído</div>
-        <h3>Ensino Médio <em>Completo</em></h3>
-        <p class="institution">CEPI - Centro de Educação Profissional e Integral</p>
-        <div class="period" style="margin-top:20px;">Concluído</div>
+        <div class="status">Ensino Superior — Concluído</div>
+        <h3>Tecnólogo em <em>Gestão de Recursos Humanos</em></h3>
+        <p class="institution">Universidade Estácio de Sá</p>
+        <div class="period" style="margin-top:20px;">2020 — 2022</div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     LANGUAGES
-     ============================================================ -->
 <section class="content-section" id="lang">
   <div class="content-card reveal" style="padding:48px;">
-    <div class="section-tag"><span class="num">05</span> Idiomas</div>
+    <div class="section-tag"><span class="num">06</span> Idiomas</div>
     <h2 class="section-title" style="margin-bottom:36px;">Comunicação <em>global</em>.</h2>
     <div class="lang-grid">
       <div class="lang-card reveal">
         <div class="lang-head">
-          <span class="level-pill">Nativo</span>
+          <span class="level-pill">Intermediário</span>
         </div>
-        <div class="name">PT</div>
-        <div class="level-bar"><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div><div class="on"></div></div>
+        <div class="name">EN</div>
+        <div class="level-bar"><div class="on"></div><div class="on"></div><div class="on"></div><div></div><div></div></div>
       </div>
       <div class="lang-card reveal">
         <div class="lang-head">
           <span class="level-pill">Básico</span>
         </div>
-        <div class="name">EN</div>
+        <div class="name">ES</div>
         <div class="level-bar"><div class="on"></div><div class="on"></div><div></div><div></div><div></div></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     INTERESTS
-     ============================================================ -->
 <section class="content-section" id="interests">
   <div class="content-card reveal">
-    <div class="section-tag"><span class="num">06</span> Interesses</div>
+    <div class="section-tag"><span class="num">07</span> Interesses</div>
     <h2 class="section-title">O que me <em>move</em>.</h2>
     <p class="section-sub">Além da rotina, assuntos que acompanho e me inspiram.</p>
     <div class="interests-cloud reveal">
@@ -357,18 +329,18 @@
       <div class="curiosity-card" data-fact="0">
         <div class="c-front">
           <div class="c-icon">&#128640;</div>
-          <div class="c-title">Mudança de estado</div>
+          <div class="c-title">ISO 9001</div>
           <div class="c-hint">Clique para revelar &rarr;</div>
         </div>
-        <div class="c-back"><p>Mudei de <strong>Goiás</strong> para o <strong>Pará</strong> em busca de novas oportunidades. A distância? <strong>1.800 km</strong>. A coragem? Ilimitada.</p></div>
+        <div class="c-back"><p>Participei da certificação <strong>ISO 9001</strong> da Secretaria de Saúde de <strong>Canaã dos Carajás - PA,</strong> a segunda do <strong>brasil</strong> a obter esse reconhecimento. </p></div>
       </div>
       <div class="curiosity-card" data-fact="1">
         <div class="c-front">
           <div class="c-icon">&#128200;</div>
-          <div class="c-title">Primeira função</div>
+          <div class="c-title">Primeiro Emprego</div>
           <div class="c-hint">Clique para revelar &rarr;</div>
         </div>
-        <div class="c-back"><p>Meu primeiro emprego foi no <strong>varejo</strong> aos 18 anos. De repositor a gestão de estoque: aprendi que toda carreira começa com <strong>atitude</strong>.</p></div>
+        <div class="c-back"><p>Meu primeiro emprego foi na <strong>Cencosud</strong> uma empresa multinacional do varejo. Foi onde inicie minha jornada profissional: aprendi que toda carreira começa com <strong>atitude</strong>.</p></div>
       </div>
       <div class="curiosity-card" data-fact="2">
         <div class="c-front">
@@ -376,34 +348,27 @@
           <div class="c-title">Aprendizado contínuo</div>
           <div class="c-hint">Clique para revelar &rarr;</div>
         </div>
-        <div class="c-back"><p>Estudo <strong>Engenharia de Produção</strong> enquanto trabalho em DP. Meu segredo? Acordar às <strong>5h</strong> para ter tempo de tudo.</p></div>
+        <div class="c-back"><p>Estudo <strong>Engenharia de Produção</strong>. Pois acredito fortemente que a otimização de <strong>processos</strong> é o melhor investimento a longo prazo.</p></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============================================================
-     CONTACT
-     ============================================================ -->
 <section class="content-section" id="contact" style="padding-top:80px; padding-bottom:140px;">
   <div class="contact-card reveal" style="max-width:720px; margin:0 auto;">
     <div class="contact-inner">
       <div>
-        <div class="section-tag"><span class="num">07</span> Contato</div>
+        <div class="section-tag"><span class="num">08</span> Contato</div>
         <h2>Vamos <em>conversar</em>?</h2>
         <p style="color:var(--text-2); font-size:14.5px; line-height:1.6;">Aberto a oportunidades em gestão de pessoas, engenharia de produção e projetos de otimização.</p>
       </div>
       <div class="contact-list" style="margin-top:8px;">
-        <a href="mailto:klisman.silva@ufra.edu.br" class="contact-item" target="_blank">
-          <div><div class="label">E-mail</div><div class="val">klisman.silva@ufra.edu.br</div></div>
+        <a href="mailto:knoliveb@gmail.com" class="contact-item" target="_blank">
+          <div><div class="label">E-mail</div><div class="val">knoliveb@gmail.com</div></div>
           <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
         </a>
-        <a href="https://wa.me/5594991512585" class="contact-item" target="_blank">
-          <div><div class="label">WhatsApp</div><div class="val">+55 (94) 99151-2585</div></div>
-          <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
-        </a>
-        <a href="https://www.linkedin.com/in/klisman-nathan" class="contact-item" target="_blank">
-          <div><div class="label">LinkedIn</div><div class="val">linkedin.com/in/klisman-nathan</div></div>
+        <a href="https://wa.me/5594991925179" class="contact-item" target="_blank">
+          <div><div class="label">WhatsApp</div><div class="val">+55 (94) 99192-5179</div></div>
           <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
         </a>
         <a href="#" class="contact-item" onclick="spawnConfettiCenter(); return false;">
@@ -415,25 +380,105 @@
   </div>
 </section>
 
-<!-- ============================================================
-     FOOTER
-     ============================================================ -->
 <footer>
   &copy; 2025 Klisman Nathan <span>&middot;</span> Construído com dedicação & propósito
 </footer>
 
-<!-- ============================================================
-     BOTTOM NAV
-     ============================================================ -->
-<nav class="bottom-nav" id="bottomNav">
-  <a href="#hero" data-section="hero" class="active">Início</a>
-  <a href="#about" data-section="about">Perfil</a>
-  <a href="#exp" data-section="exp">Experiência</a>
-  <a href="#skills" data-section="skills">Skills</a>
-  <a href="#edu" data-section="edu">Formação</a>
-  <a href="#contact" data-section="contact">Contato</a>
-</nav>
+<section class="content-section secret-section" id="secret">
+  <div class="content-card reveal secret-card">
+    <div class="section-tag"><span class="num">★</span> Área Secreta Desbloqueada</div>
+    <h2 class="section-title">Parabéns, <em>explorador(a)</em>!</h2>
+    <p class="section-sub">Você desbloqueou a área secreta.</p>
 
-<script src="script.js"></script>
+    <div class="secret-prize">
+      <img src="insignia.png" alt="Insígnia do Café Perfeito" class="insignia-img">
+      <p class="prize-text">Como recompensa por ter chegado até aqui, você agora tem acesso a minha receita secretas do café perfeito!</p>
+    </div>
+
+    <div class="recipe-card">
+      <h3>A Receita do Café Perfeito</h3>
+      <ol class="recipe-steps">
+        <li><span class="step-num">1</span><strong>Aqueça a água:</strong> Esquente 300ml de água filtrada e desligue o fogo logo antes de ferver (quando surgirem pequenas bolhas).</li>
+        <li><span class="step-num">2</span><strong>Prepare o pó:</strong> Coloque o filtro no suporte e adicione 2 a 3 colheres de sopa bem cheias de café.</li>
+        <li><span class="step-num">3</span><strong>Umedeça:</strong> Jogue um pouquinho de água apenas para molhar todo o pó e espere 15 segundos.</li>
+        <li><span class="step-num">4</span><strong>Coe:</strong> Despeje o resto da água em movimentos circulares, de forma contínua e sem mexer com colher.</li>
+        <li><span class="step-num">5</span><strong>Sirva:</strong> Beba imediatamente e, se preferir, adoce direto na xícara.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<div class="side-controls" id="sideControls">
+
+  <button class="theme-toggle" id="themeToggle" type="button" aria-label="Alternar modo claro/escuro" title="Alternar modo claro/escuro">
+    <svg class="icon-sun" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <circle cx="12" cy="12" r="4"/>
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+    </svg>
+    <svg class="icon-moon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+    </svg>
+  </button>
+
+  <nav class="side-nav" id="sideNav">
+    <a href="#hero" data-section="hero" class="active">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M3 10.5L12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-7h-6v7H4a1 1 0 0 1-1-1z"/>
+        </svg>
+      </span>
+      <span class="nav-label">Início</span>
+    </a>
+    <a href="#about" data-section="about">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="8" r="4"/>
+          <path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+        </svg>
+      </span>
+      <span class="nav-label">Perfil</span>
+    </a>
+    <a href="#exp" data-section="exp">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="7" width="18" height="13" rx="2"/>
+          <path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+          <path d="M3 13h18"/>
+        </svg>
+      </span>
+      <span class="nav-label">Experiência</span>
+    </a>
+    <a href="#skills" data-section="skills">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="16 18 22 12 16 6"/>
+          <polyline points="8 6 2 12 8 18"/>
+        </svg>
+      </span>
+      <span class="nav-label">Skills</span>
+    </a>
+    <a href="#edu" data-section="edu">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10L12 5 2 10l10 5 10-5z"/>
+          <path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/>
+        </svg>
+      </span>
+      <span class="nav-label">Formação</span>
+    </a>
+    <a href="#contact" data-section="contact">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 7l9 7 9-7"/>
+        </svg>
+      </span>
+      <span class="nav-label">Contato</span>
+    </a>
+  </nav>
+
+</div>
+
+<script src="main.js"></script>
 </body>
 </html>
