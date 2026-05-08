@@ -2,7 +2,13 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B1628" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F2F5FA" media="(prefers-color-scheme: light)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="format-detection" content="telephone=no">
+<meta name="description" content="Klisman Nathan — Profissional de RH e Engenharia de Produção. Resultados com pessoas e processos.">
 <title>Klisman Nathan — Jornada Profissional</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -71,28 +77,45 @@
   </a>
 </section>
 
-<div style="height: 30vh"></div>
+<div class="vspace vspace-lg"></div>
 
 <section class="content-section" id="about">
   <div class="content-card reveal">
     <div class="section-tag"><span class="num">01</span> Perfil</div>
     <h2 class="section-title">Resultados = <em>pessoas</em> + <em>processos</em></h2>
     <p class="section-sub">Resultados consistentes nascem da combinação certa entre pessoas engajadas e processos bem estruturados.</p>
-    <div style="display:grid; grid-template-columns:1.1fr 1fr; gap:40px; align-items:start;">
-      <p style="font-size: clamp(1.1rem, 1.8vw, 1.4rem); line-height:1.45; color:var(--text);">Muitas empresas possuem ferramentas avançadas, mas a falta de sintonia entre a tecnologia e o capital humano gera processos engessados e resultados ineficientes.</p>
-      <div style="color:var(--text-2); font-size:14.5px; line-height:1.7;">
+    <div class="about-grid">
+      <p class="about-lead">Muitas empresas possuem ferramentas avançadas, mas a falta de sintonia entre a tecnologia e o capital humano gera processos engessados e resultados ineficientes.</p>
+      <div class="about-body">
         <p>Na prática, é exatamente nessa lacuna que eu atuo. Utilizo minha base em Recursos Humanos e Engenharia de Produção para dar propósito às ferramentas analíticas, criando a sintonia necessária para destravar processos, padronizar rotinas e transformar tecnologia em eficiência real.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div style="height: 20vh"></div>
+<div class="vspace vspace-md"></div>
+
+<section class="content-section" id="method">
+  <div class="content-card reveal">
+    <div class="section-tag"><span class="num">02</span> Metodologia</div>
+    <h2 class="section-title">Estrutura sobre <em>improviso</em>.</h2>
+    <p class="section-sub">Cinco passos que sigo em todo projeto de melhoria — da operação ao indicador.</p>
+    <ol class="method-steps">
+      <li><span class="step-num">1</span><div class="step-body"><strong>Diagnóstico.</strong> Mapeio o cenário atual: pessoas envolvidas, ferramentas em uso, gargalos visíveis e indicadores disponíveis.</div></li>
+      <li><span class="step-num">2</span><div class="step-body"><strong>Escuta ativa.</strong> Converso com quem opera o processo. As melhores ideias de melhoria estão na operação, não na teoria.</div></li>
+      <li><span class="step-num">3</span><div class="step-body"><strong>Padronização.</strong> Documento POPs e Instruções de Trabalho claros — cada passo, cada responsável, cada exceção previstos.</div></li>
+      <li><span class="step-num">4</span><div class="step-body"><strong>Mensuração.</strong> Defino indicadores acionáveis. O que não é medido não é gerenciado; o que é bem medido vira decisão.</div></li>
+      <li><span class="step-num">5</span><div class="step-body"><strong>Iteração.</strong> Ajusto com base em dados reais. Processo bom é vivo, não burocrático.</div></li>
+    </ol>
+  </div>
+</section>
+
+<div class="vspace vspace-md"></div>
 
 <section class="content-section" id="exp">
   <div class="exp-head-wrap">
     <div class="content-card-head reveal">
-      <div class="section-tag"><span class="num">02</span> Trajetória</div>
+      <div class="section-tag"><span class="num">03</span> Trajetória</div>
       <h2 class="section-title">Experiência <em>profissional</em>.</h2>
       <p class="section-sub" style="margin-bottom:0;">Role para percorrer a linha do tempo. Cada parada é uma posição que ocupei.</p>
     </div>
@@ -220,11 +243,11 @@
   </div>
 </section>
 
-<div style="height: 20vh"></div>
+<div class="vspace vspace-md"></div>
 
 <section class="content-section" id="skills">
   <div class="content-card reveal">
-    <div class="section-tag"><span class="num">03</span> Stack</div>
+    <div class="section-tag"><span class="num">04</span> Stack</div>
     <h2 class="section-title">Ferramentas <em>do dia a dia</em>.</h2>
     <p class="section-sub">Conjunto de sistemas, plataformas e competências que utilizo para entregar resultados.</p>
     <div class="skills-grid">
@@ -285,9 +308,9 @@
 </section>
 
 <section class="content-section" id="lang">
-  <div class="content-card reveal" style="padding:48px;">
+  <div class="content-card reveal lang-section-card">
     <div class="section-tag"><span class="num">06</span> Idiomas</div>
-    <h2 class="section-title" style="margin-bottom:36px;">Comunicação <em>global</em>.</h2>
+    <h2 class="section-title section-title--spaced">Comunicação <em>global</em>.</h2>
     <div class="lang-grid">
       <div class="lang-card reveal">
         <div class="lang-head">
@@ -354,8 +377,8 @@
   </div>
 </section>
 
-<section class="content-section" id="contact" style="padding-top:80px; padding-bottom:140px;">
-  <div class="contact-card reveal" style="max-width:720px; margin:0 auto;">
+<section class="content-section contact-section" id="contact">
+  <div class="contact-card reveal contact-card--narrow">
     <div class="contact-inner">
       <div>
         <div class="section-tag"><span class="num">08</span> Contato</div>
@@ -371,7 +394,7 @@
           <div><div class="label">WhatsApp</div><div class="val">+55 (94) 99192-5179</div></div>
           <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
         </a>
-        <a href="#" class="contact-item" onclick="spawnConfettiCenter(); return false;">
+        <a href="https://maps.google.com/?q=Cana%C3%A3+dos+Caraj%C3%A1s,PA,Brasil" class="contact-item" target="_blank" rel="noopener">
           <div><div class="label">Localização</div><div class="val">Canaã dos Carajás · PA, Brasil</div></div>
           <div class="arrow-wrap"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
         </a>
@@ -383,30 +406,6 @@
 <footer>
   &copy; 2025 Klisman Nathan <span>&middot;</span> Construído com dedicação & propósito
 </footer>
-
-<section class="content-section secret-section" id="secret">
-  <div class="content-card reveal secret-card">
-    <div class="section-tag"><span class="num">★</span> Área Secreta Desbloqueada</div>
-    <h2 class="section-title">Parabéns, <em>explorador(a)</em>!</h2>
-    <p class="section-sub">Você desbloqueou a área secreta.</p>
-
-    <div class="secret-prize">
-      <img src="insignia.png" alt="Insígnia do Café Perfeito" class="insignia-img">
-      <p class="prize-text">Como recompensa por ter chegado até aqui, você agora tem acesso a minha receita secretas do café perfeito!</p>
-    </div>
-
-    <div class="recipe-card">
-      <h3>A Receita do Café Perfeito</h3>
-      <ol class="recipe-steps">
-        <li><span class="step-num">1</span><strong>Aqueça a água:</strong> Esquente 300ml de água filtrada e desligue o fogo logo antes de ferver (quando surgirem pequenas bolhas).</li>
-        <li><span class="step-num">2</span><strong>Prepare o pó:</strong> Coloque o filtro no suporte e adicione 2 a 3 colheres de sopa bem cheias de café.</li>
-        <li><span class="step-num">3</span><strong>Umedeça:</strong> Jogue um pouquinho de água apenas para molhar todo o pó e espere 15 segundos.</li>
-        <li><span class="step-num">4</span><strong>Coe:</strong> Despeje o resto da água em movimentos circulares, de forma contínua e sem mexer com colher.</li>
-        <li><span class="step-num">5</span><strong>Sirva:</strong> Beba imediatamente e, se preferir, adoce direto na xícara.</li>
-      </ol>
-    </div>
-  </div>
-</section>
 
 <div class="side-controls" id="sideControls">
 
@@ -437,6 +436,19 @@
         </svg>
       </span>
       <span class="nav-label">Perfil</span>
+    </a>
+    <a href="#method" data-section="method">
+      <span class="nav-icon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="10" y1="6" x2="21" y2="6"/>
+          <line x1="10" y1="12" x2="21" y2="12"/>
+          <line x1="10" y1="18" x2="21" y2="18"/>
+          <path d="M4 6h1v4"/>
+          <path d="M4 10h2"/>
+          <path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>
+        </svg>
+      </span>
+      <span class="nav-label">Metodologia</span>
     </a>
     <a href="#exp" data-section="exp">
       <span class="nav-icon" aria-hidden="true">

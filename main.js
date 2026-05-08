@@ -1,8 +1,16 @@
 // ============================================================
-// 1. GENERATE STARS
+// 0. MOBILE / DEVICE DETECTION (used for performance scaling)
+// ============================================================
+const IS_MOBILE = window.matchMedia('(max-width: 900px)').matches;
+const IS_SMALL  = window.matchMedia('(max-width: 480px)').matches;
+const REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ============================================================
+// 1. GENERATE STARS — fewer on mobile for performance
 // ============================================================
 const starsContainer = document.getElementById('stars');
-for(let i=0; i<80; i++){
+const STAR_COUNT = IS_SMALL ? 30 : (IS_MOBILE ? 45 : 50);
+for(let i=0; i<STAR_COUNT; i++){
   const star = document.createElement('div');
   star.className = 'star';
   star.style.cssText = `
@@ -16,10 +24,11 @@ for(let i=0; i<80; i++){
 }
 
 // ============================================================
-// 2. GENERATE CLOUDS
+// 2. GENERATE CLOUDS — fewer on mobile
 // ============================================================
 const cloudsContainer = document.getElementById('clouds');
-for(let i=0; i<6; i++){
+const CLOUD_COUNT = IS_MOBILE ? 3 : 6;
+for(let i=0; i<CLOUD_COUNT; i++){
   const cloud = document.createElement('div');
   cloud.className = 'cloud';
   const w = 120+Math.random()*200;
@@ -40,10 +49,10 @@ for(let i=0; i<6; i++){
 }
 
 // ============================================================
-// 3. GENERATE CITY SKYLINE
+// 3. GENERATE CITY SKYLINE — fewer buildings on mobile
 // ============================================================
 const cityContainer = document.getElementById('city');
-const buildingCount = 40;
+const buildingCount = IS_MOBILE ? 22 : 30;
 for(let i=0; i<buildingCount; i++){
   const b = document.createElement('div');
   b.className = 'building' + (Math.random()>0.6 ? ' windows' : '');
@@ -54,13 +63,15 @@ for(let i=0; i<buildingCount; i++){
 }
 
 // ============================================================
-// 5. PARALLAX SCROLL ENGINE
+// 5. PARALLAX SCROLL ENGINE — rAF-throttled for mobile smoothness
 // ============================================================
 const city = document.getElementById('city');
 const clouds = document.getElementById('clouds');
 const progressBar = document.getElementById('scrollProgress');
 
+let parallaxRaf = null;
 function updateParallax(){
+  parallaxRaf = null;
   const scrollTop = window.scrollY;
   const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   const scrollPct = docHeight > 0 ? scrollTop / docHeight : 0;
@@ -68,23 +79,28 @@ function updateParallax(){
   // Progress bar global
   progressBar.style.width = (scrollPct * 100) + '%';
 
-  // City parallax (moves slowly)
-  city.style.transform = `translateX(-${scrollPct * 30}%)`;
-
-  // Clouds parallax (moves very slowly, opposite direction)
-  clouds.style.transform = `translateX(${scrollPct * 15}%)`;
+  // Parallax: gentler intensity on mobile to feel less wobbly
+  const cityShift = IS_MOBILE ? scrollPct * 18 : scrollPct * 30;
+  const cloudShift = IS_MOBILE ? scrollPct * 8 : scrollPct * 15;
+  city.style.transform = `translate3d(-${cityShift}%, 0, 0)`;
+  clouds.style.transform = `translate3d(${cloudShift}%, 0, 0)`;
 }
 
-window.addEventListener('scroll', updateParallax, { passive: true });
+function onScrollParallax(){
+  if(parallaxRaf) return;
+  parallaxRaf = requestAnimationFrame(updateParallax);
+}
+
+window.addEventListener('scroll', onScrollParallax, { passive: true });
 updateParallax();
 
 // ============================================================
 // 6. TYPEWRITER EFFECT
 // ============================================================
 const typewriterTexts = [
-  "A empatia da<strong> gestao de pessoas </strong> de mãos dadas com a precisão da <strong> Engenharia de Produção</strong>.",
-  "Carrego comigo a certeza de que processos bem feitos mudam vidas.",
-  "Se tem Excel e uma xícara de café, eu resolvo. Se não tiver o café, resolvemos do mesmo jeito.☕"
+  "A empatia da<strong> gestão de pessoas </strong> de mãos dadas com a precisão da <strong> Engenharia de Produção</strong>.",
+  "Carrego comigo a certeza de que processos bem estruturados geram impacto operacional real.",
+  "O trabalho em equipe é a alavanca para o sucesso da organização.",
 ];
 let twIndex = 0, twChar = 0, twDeleting = false;
 const twElement = document.getElementById('typewriterText');
@@ -120,12 +136,8 @@ setTimeout(typewriterTick, 1200);
 // ============================================================
 const dotEl = document.querySelector('.hero-name em');
 const funFacts = [
-  "Ja organizei processos de admissao para mais de 200 colaboradores em um unico projeto!",
-  "Falo 3 'idiomas' do trabalho: RH, Engenharia e Excel avancado.",
-  "Sou o tipo de pessoa que cria planilha ate pra lista de supermercado.",
-  "Dei aula informal de Excel pros colegas da prefeitura. Virou tradicao toda sexta.",
-  "Sonho em um dia otimizar processos de uma multinacional. Ate la, otimizo o cafe da manha.",
-  "Ja morei em 3 estados diferentes. Sempre carrego a mala leve e o curriculo pesado."
+  "Já organizei processos de admissão para mais de 200 colaboradores em um único projeto!",
+  "Gosto de organização e planejamento, crio planilha até pra lista de supermercado.",
 ];
 let factIndex = 0;
 const tipEl = document.getElementById('funFactTip');
@@ -142,10 +154,31 @@ if(dotEl && tipEl){
     tipText.textContent = funFacts[factIndex];
     factIndex = (factIndex + 1) % funFacts.length;
 
-    const rect = dotEl.getBoundingClientRect();
-    tipEl.style.left = (rect.left + rect.width/2 - 140) + 'px';
-    tipEl.style.top = (rect.bottom + 12) + 'px';
+    // Show first so we can measure its real width — important on mobile where
+    // a hardcoded offset could push the tooltip off-screen
     tipEl.classList.add('show');
+
+    requestAnimationFrame(() => {
+      const dotRect = dotEl.getBoundingClientRect();
+      const tipRect = tipEl.getBoundingClientRect();
+      const margin = 12; // safe margin from screen edges
+      const vw = window.innerWidth;
+      const vh = window.innerHeight;
+
+      // Center the tooltip horizontally on the dot, then clamp to viewport
+      let left = dotRect.left + dotRect.width / 2 - tipRect.width / 2;
+      left = Math.max(margin, Math.min(left, vw - tipRect.width - margin));
+
+      // Place below the dot if there's room, otherwise above
+      let top = dotRect.bottom + 12;
+      if (top + tipRect.height > vh - margin) {
+        top = Math.max(margin, dotRect.top - tipRect.height - 12);
+      }
+
+      tipEl.style.left = left + 'px';
+      tipEl.style.top = top + 'px';
+    });
+
     setTimeout(() => tipEl.classList.remove('show'), 4000);
   });
 }
@@ -495,83 +528,7 @@ const sectionObs = new IntersectionObserver((entries) => {
 contentSections.forEach(s => sectionObs.observe(s));
 
 // ============================================================
-// 15. SECRET KEY COMBO (press K 3x)
-// ============================================================
-let kPresses = 0, kTimeout;
-document.addEventListener('keydown', (e) => {
-  if(e.key === 'k' || e.key === 'K'){
-    kPresses++;
-    clearTimeout(kTimeout);
-    kTimeout = setTimeout(() => kPresses = 0, 800);
-    if(kPresses >= 3){
-      kPresses = 0;
-      spawnConfetti(window.innerWidth/2, window.innerHeight/2, 200);
-    }
-  }
-});
-
-// ============================================================
-// 16. SECRET SECTION — Revealed after scrolling at the end
-// ============================================================
-let endScrollAttempts = 0;
-let lastScrollY = 0;
-let secretRevealed = false;
-const secretSection = document.getElementById('secret');
-
-function revealSecret(){
-  if(secretRevealed || !secretSection) return;
-  secretRevealed = true;
-
-  // Show the section
-  secretSection.style.display = 'block';
-  secretSection.classList.add('revealed');
-
-  // Animate the content card
-  const card = secretSection.querySelector('.content-card');
-  if(card){
-    requestAnimationFrame(() => {
-      card.classList.add('in');
-    });
-  }
-
-  // Celebration confetti
-  setTimeout(() => {
-    spawnConfetti(window.innerWidth/2, window.innerHeight/2, 200);
-  }, 300);
-
-  // Also spawn confetti around the prize area after scroll
-  setTimeout(() => {
-    const prize = secretSection.querySelector('.secret-prize');
-    if(prize){
-      const rect = prize.getBoundingClientRect();
-      if(rect.top >= 0 && rect.bottom <= window.innerHeight){
-        spawnConfetti(rect.left + rect.width/2, rect.top + rect.height/2, 80);
-      }
-    }
-  }, 1200);
-}
-
-window.addEventListener('scroll', () => {
-  if(secretRevealed || !secretSection) return;
-
-  const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-  // Only count if user is near the bottom (last 250px) and scrolling down
-  if(scrollTop > docHeight - 250 && scrollTop > lastScrollY){
-    endScrollAttempts++;
-    if(endScrollAttempts >= 3){
-      revealSecret();
-    }
-  }
-  lastScrollY = scrollTop;
-}, { passive: true });
-
-console.log('%cOla, curioso!', 'font-size:20px; font-weight:bold; color:#E07040;');
-console.log('%cDica: tecle K 3 vezes rapido para um easter egg.', 'color:#8EA3C0;');
-
-// ============================================================
-// 17. THEME TOGGLE (Light / Dark mode)
+// 15. THEME TOGGLE (Light / Dark mode)
 // ============================================================
 (function themeToggleSetup(){
   const root = document.documentElement;

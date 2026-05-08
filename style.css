@@ -27,7 +27,7 @@
   --shadow-strong: rgba(0,0,0,0.4);
   --avatar-shadow: rgba(0,0,0,0.3);
   --stars-opacity: 1;
-  --city-opacity: 0.15;
+  --city-opacity: 0.10;
   --confetti-color-2: #F0F4FA;
   --confetti-color-3: #3B6CB5;
   --confetti-color-4: #60a5fa;
@@ -63,7 +63,7 @@
   --shadow-strong: rgba(30,50,90,0.14);
   --avatar-shadow: rgba(30,50,90,0.18);
   --stars-opacity: 0;
-  --city-opacity: 0.16;
+  --city-opacity: 0.10;
   --confetti-color-2: #1A2238;
   --confetti-color-3: #3B6CB5;
   --confetti-color-4: #2563eb;
@@ -72,7 +72,12 @@
 }
 
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{
+  scroll-behavior:smooth;
+  /* Prevent iOS text size auto-adjust on rotation */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
 body{
   background: var(--bg);
   color: var(--text);
@@ -84,8 +89,50 @@ body{
   -webkit-font-smoothing: antialiased;
   letter-spacing: 0.01em;
   transition: background-color 0.45s ease, color 0.45s ease;
+  /* Avoid iOS rubber-band exposing content behind */
+  overscroll-behavior-y: none;
 }
 ::selection{background: var(--accent); color: var(--text)}
+
+/* Make every interactive element snappy on touch (removes 300ms delay) */
+a, button, .filter, .pill, .curiosity-card, .contact-item, .scroll-down,
+.theme-toggle, .side-nav a, .rail-marker{
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Vertical spacers that scale with viewport */
+.vspace{ width: 100%; }
+.vspace-lg{ height: 30vh; }
+.vspace-md{ height: 20vh; }
+
+/* About section grid — defaults to 2 cols on desktop, stacks on mobile via media query */
+.about-grid{
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 40px;
+  align-items: start;
+}
+.about-lead{
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  line-height: 1.45;
+  color: var(--text);
+}
+.about-body{
+  color: var(--text-2);
+  font-size: 14.5px;
+  line-height: 1.7;
+}
+
+/* Language section card spacing — overridable for mobile.
+   Uses compound selector so it beats .content-card (defined later) at same specificity. */
+.content-card.lang-section-card{ padding: 48px; }
+.section-title--spaced{ margin-bottom: 36px; }
+
+/* Contact section padding/width — overridable for mobile.
+   Compound selectors for the same cascade reason. */
+.content-section.contact-section{ padding-top: 80px; padding-bottom: 140px; }
+.contact-card.contact-card--narrow{ max-width: 720px; margin: 0 auto; }
 
 /* ============================================================
    PARALLAX WORLD SCENE
@@ -330,6 +377,8 @@ body{
    ============================================================ */
 .hero{
   min-height: 100vh;
+  /* Dynamic viewport height — accounts for mobile browser chrome (Safari, Chrome) */
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -338,6 +387,9 @@ body{
   z-index: 5;
   text-align: center;
   padding: 0 24px;
+  /* Respect notch on landscape iPhones */
+  padding-left: max(24px, env(safe-area-inset-left));
+  padding-right: max(24px, env(safe-area-inset-right));
 }
 .hero-badge{
   display: inline-flex;
@@ -1335,109 +1387,47 @@ body{
 }
 
 /* ============================================================
-   SECRET SECTION
+   METHODOLOGY — five-step process card
+   Visually structured like a numbered framework, professional tone.
+   Replaces the legacy "secret coffee recipe" section.
    ============================================================ */
-.secret-section{
-  display: none;
-  max-width: 800px;
-}
-.secret-section.revealed{
-  display: block;
-  animation: secretAppear 1s cubic-bezier(.2,.8,.2,1) both;
-}
-@keyframes secretAppear{
-  from{ opacity: 0; transform: translateY(60px) scale(0.97); }
-  to{ opacity: 1; transform: translateY(0) scale(1); }
-}
-.secret-card .section-tag .num{
-  color: #FFD700;
-}
-.secret-card{
-  border-color: rgba(224,112,64,0.3);
-  background: var(--card-bg-strong);
-}
-.secret-card::before{
-  background: linear-gradient(90deg, transparent, var(--accent), #FFD700, transparent);
-  opacity: 0.8;
-}
-.secret-prize{
-  text-align: center;
-  margin: 32px 0;
-  padding: 24px;
-  background: var(--bg-1);
-  border: 1px solid var(--border-strong);
-  border-radius: 16px;
-}
-.insignia-img{
-  width: 180px;
-  height: 180px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 24px rgba(255,215,0,0.25));
-  animation: insigniaFloat 3s ease-in-out infinite;
-}
-@keyframes insigniaFloat{
-  0%, 100%{ transform: translateY(0); }
-  50%{ transform: translateY(-8px); }
-}
-.prize-text{
-  margin-top: 16px;
-  font-family: 'Space Mono', monospace;
-  font-size: 13px;
-  color: var(--accent);
-  letter-spacing: 0.04em;
-}
-.recipe-card{
-  margin-top: 24px;
-  padding: 28px;
-  background: var(--bg-1);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-}
-.recipe-card h3{
-  font-family: 'Outfit', sans-serif;
-  font-weight: 600;
-  font-size: 1.2rem;
-  margin-bottom: 20px;
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.recipe-card h3::before{
-  content: '';
-  display: inline-block;
-  width: 6px;
-  height: 24px;
-  background: var(--accent);
-  border-radius: 3px;
-}
-.recipe-steps{
+.method-steps{
   list-style: none;
-  counter-reset: step;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
+  margin-top: 12px;
+  counter-reset: step;
 }
-.recipe-steps li{
+.method-steps li{
   display: flex;
   align-items: flex-start;
   gap: 14px;
-  font-size: 14px;
+  font-size: 14.5px;
   color: var(--text-2);
   line-height: 1.6;
-  padding: 14px;
-  background: var(--bg-2);
+  padding: 16px 18px;
+  background: var(--bg-1);
   border-radius: 12px;
   border: 1px solid var(--border);
-  transition: all 0.3s;
+  transition: border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease;
 }
-.recipe-steps li:hover{
+.method-steps li:hover{
   border-color: var(--border-strong);
-  transform: translateX(4px);
+  background: var(--bg-2);
+  transform: translateX(3px);
 }
-.recipe-steps li strong{
+.method-steps li .step-body{
+  flex: 1;
+  min-width: 0; /* lets long words wrap inside flex item */
+}
+.method-steps li strong{
   color: var(--text);
   font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+  font-family: 'Outfit', sans-serif;
+  letter-spacing: -0.005em;
 }
 .step-num{
   flex-shrink: 0;
@@ -1566,12 +1556,75 @@ footer span{ color: var(--accent) }
 /* ============================================================
    RESPONSIVE
    ============================================================ */
+/* ============================================================
+   RESPONSIVE — Comprehensive mobile/tablet system
+   Breakpoints: 1024 (tablet landscape), 768 (tablet/phone),
+   480 (phone), 360 (small phone)
+   ============================================================ */
+
+/* Only apply hover effects on devices that actually support hover.
+   This prevents "stuck hover" bug on touch devices where a tapped
+   element keeps its hover state until you tap somewhere else. */
+@media (hover: none){
+  .content-card:hover,
+  .skill-group:hover, .edu-card:hover, .lang-card:hover,
+  .curiosity-card:hover,
+  .pill:hover,
+  .contact-item:hover,
+  .method-steps li:hover,
+  .theme-toggle:hover,
+  .side-nav a:hover,
+  .scroll-down:hover{
+    transform: none;
+    box-shadow: none;
+  }
+  .contact-item:hover .arrow-wrap{ transform: none; }
+  .side-nav a:hover .nav-icon{ transform: none; }
+  /* Active state for touch — happens on tap */
+  .contact-item:active{ background: var(--bg-3); }
+  .pill:active{ background: var(--bg-2); border-color: var(--accent); }
+  .curiosity-card:active{ border-color: var(--accent); }
+  .filter-bar button:active{ background: var(--bg-3); }
+}
+
+/* Respect users who prefer less motion — important accessibility feature
+   that's especially helpful on mobile where animations can cause discomfort */
+@media (prefers-reduced-motion: reduce){
+  *, *::before, *::after{
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .reveal{ opacity: 1 !important; transform: none !important; }
+  .star{ animation: none; opacity: var(--max, 0.5); }
+  .typewriter-cursor{ animation: none; }
+  .scroll-down .arrow{ animation: none; }
+  .hero-badge .pulse{ animation: none; }
+  .rail-meta .scroll-hint svg{ animation: none; }
+}
+
+/* ----------- TABLET LANDSCAPE & SMALLER (≤ 1024px) ----------- */
+@media (max-width: 1024px){
+  .content-section{ padding: 80px 22px; }
+  #exp{ padding: 80px 0; }
+  .exp-card{ width: 380px; }
+  .curiosities-grid{ grid-template-columns: repeat(2, 1fr); }
+  .content-card.lang-section-card{ padding: 40px; }
+}
+
+/* ----------- TABLET PORTRAIT & MOBILE (≤ 900px) -----------
+   This is the major breakpoint — switches the whole layout to mobile.
+   Disables horizontal scroll-jacking on the experience timeline,
+   collapses navigation to a bottom pill, and stacks grids. */
 @media (max-width: 900px){
-  /* Mobile: stack theme toggle + side-nav as a horizontal bar at the bottom */
+  /* ----- SIDE CONTROLS: bottom pill bar with safe-area for iPhones ----- */
   .side-controls{
     left: 50%;
     top: auto;
     bottom: 16px;
+    /* Respect home indicator on iPhones with notch */
+    bottom: max(16px, env(safe-area-inset-bottom));
     transform: translateX(-50%);
     flex-direction: row;
     align-items: center;
@@ -1579,12 +1632,13 @@ footer span{ color: var(--accent) }
     max-width: calc(100% - 24px);
   }
   .theme-toggle{
-    width: 42px;
-    height: 42px;
+    width: 46px;   /* Larger touch target — Apple recommends min 44x44 */
+    height: 46px;
     flex-shrink: 0;
   }
   .theme-toggle svg{ width: 18px; height: 18px; }
-  /* Side nav becomes horizontal pill — stays compact (icons-only) on mobile, no hover-to-expand */
+
+  /* Side nav: horizontal pill with all items visible, no hover-expand */
   .side-nav{
     flex-direction: row;
     width: auto;
@@ -1592,27 +1646,27 @@ footer span{ color: var(--accent) }
     gap: 2px;
     border-radius: 100px;
     overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
   }
+  .side-nav::-webkit-scrollbar{ display: none; }
   .side-nav:hover,
   .side-nav:focus-within{
     width: auto;
     border-radius: 100px;
   }
-  .side-nav a{
-    padding: 0;
-  }
+  .side-nav a{ padding: 0; }
   .side-nav .nav-icon{
-    width: 32px;
-    height: 32px;
+    width: 44px;   /* Larger touch target */
+    height: 44px;
   }
   .side-nav .nav-icon svg{
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
   }
-  .side-nav .nav-label{
-    display: none; /* labels hidden on mobile */
-  }
-  /* Disable horizontal scroll-jacking on mobile */
+  .side-nav .nav-label{ display: none; }
+
+  /* ----- EXPERIENCE TIMELINE: kill horizontal scroll-jacking on mobile ----- */
   #exp{ padding: 60px 0 }
   .exp-head-wrap{ padding: 0 16px }
   .exp-head-wrap .content-card-head{ padding: 24px 20px }
@@ -1625,7 +1679,7 @@ footer span{ color: var(--accent) }
   .exp-track-viewport{ overflow: visible }
   .exp-track{
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
     padding: 0 !important;
     transform: none !important;
   }
@@ -1639,15 +1693,217 @@ footer span{ color: var(--accent) }
   }
   .timeline-rail{ display: none }
 
-  .skills-grid, .edu-grid, .lang-grid{ grid-template-columns: 1fr }
+  /* ----- FILTER BAR: scroll horizontally if it overflows ----- */
+  .filter-bar{
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    max-width: 100%;
+    flex-wrap: nowrap;
+  }
+  .filter-bar::-webkit-scrollbar{ display: none; }
+  .filter-bar button{
+    flex-shrink: 0;
+    padding: 10px 14px;     /* Bigger touch target */
+    font-size: 12px;
+  }
+
+  /* ----- ABOUT SECTION: stack the two-column grid ----- */
+  .about-grid{
+    grid-template-columns: 1fr;
+    gap: 22px;
+  }
+
+  /* ----- GENERAL GRIDS: stack everything ----- */
+  .skills-grid, .edu-grid{ grid-template-columns: 1fr }
+  .lang-grid{ grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .curiosities-grid{ grid-template-columns: 1fr }
-  .contact-inner{ grid-template-columns: 1fr; gap: 32px }
-  .content-card{ padding: 28px 20px }
+  .contact-inner{ grid-template-columns: 1fr; gap: 28px }
+
+  /* ----- SECTIONS: tighter padding ----- */
+  .content-section{ padding: 60px 18px; }
+  .content-card{ padding: 28px 22px }
+  .content-card.lang-section-card{ padding: 32px 22px; }
+  .section-title--spaced{ margin-bottom: 24px; }
+  .content-section.contact-section{ padding-top: 60px; padding-bottom: 100px; }
+  .contact-card{ padding: 28px 22px; }
+
+  /* ----- VERTICAL SPACERS: smaller on mobile ----- */
+  .vspace-lg{ height: 12vh; min-height: 60px; }
+  .vspace-md{ height: 8vh; min-height: 40px; }
+
+  /* ----- HERO: bigger touch target on scroll-down arrow ----- */
   .hero-name{ font-size: clamp(2.4rem, 12vw, 5rem) }
-  .toast-container{ right: 12px; bottom: 80px; left: 12px }
+  .hero-tagline{ padding: 0 4px; }
+  .scroll-down .arrow{ width: 44px; height: 44px; }
+
+  /* ----- TOAST: stack above bottom nav, full-width ----- */
+  .toast-container{
+    right: 12px;
+    left: 12px;
+    /* Sit above the bottom nav-pill (which is at 16px + ~46px tall + padding) */
+    bottom: calc(80px + env(safe-area-inset-bottom));
+  }
   .toast{ max-width: 100% }
 
-  /* Secret section responsive */
-  .insignia-img{ width: 140px; height: 140px; }
-  .recipe-steps li{ font-size: 13px; }
+  /* ----- FUN-FACT TOOLTIP: cap width, prevent overflow ----- */
+  .fun-fact-tooltip{
+    max-width: calc(100vw - 24px);
+  }
+
+  /* ----- CURIOSITY CARDS: bigger touch + clearer "tap to flip" hint ----- */
+  .curiosity-card{ min-height: 110px; padding: 18px; }
+
+  /* ----- CONTACT: bigger tap targets ----- */
+  .contact-item{ padding: 18px; }
+  .contact-item .val{ font-size: 14.5px; word-break: break-word; }
+
+  /* ----- METHODOLOGY STEPS: tighter for mobile ----- */
+  .method-steps li{ font-size: 13.5px; padding: 14px; gap: 12px; }
+  .step-num{ width: 24px; height: 24px; font-size: 11px; }
+
+  /* ----- DOT FLYER: shorter trail on mobile (was 60vw which looked huge) ----- */
+  @keyframes trailGrow{
+    0%{ width: 0px; opacity: 0.8; }
+    100%{ width: 50vw; opacity: 0; }
+  }
+
+  /* ----- PARALLAX BG: lighter blur on mobile (perf) ----- */
+  .content-card,
+  .exp-head-wrap .content-card-head,
+  .exp-card,
+  .side-nav,
+  .theme-toggle{
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* ----- CITY LAYER: shorter on mobile so it doesn't dominate ----- */
+  .city-layer{ height: 25vh; }
+}
+
+/* ----------- PHONE (≤ 480px) ----------- */
+@media (max-width: 480px){
+  body{ font-size: 14.5px; }
+
+  .content-section{ padding: 50px 14px; }
+  .content-card{ padding: 24px 18px; border-radius: 16px; }
+  .content-card.lang-section-card{ padding: 26px 18px; }
+  .contact-card{ padding: 24px 18px; border-radius: 16px; }
+  .exp-head-wrap{ padding: 0 14px; }
+  .exp-head-wrap .content-card-head{ padding: 22px 18px; border-radius: 16px; }
+  .exp-scroll-sticky{ padding: 0 14px; }
+
+  /* Hero gets a bit smaller spacing on phones */
+  .hero{ padding: 0 18px; }
+  .hero-badge{ font-size: 11px; padding: 5px 12px; margin-bottom: 24px; }
+  .hero-name{ margin-bottom: 20px; }
+  .hero-tagline{ margin-bottom: 32px; min-height: 4em; }
+
+  /* Section titles wrap nicer */
+  .section-title{ font-size: clamp(1.6rem, 7vw, 2.2rem); }
+  .section-sub{ font-size: 14px; }
+
+  /* About lead text smaller on phones */
+  .about-lead{ font-size: 1.05rem; line-height: 1.5; }
+  .about-body{ font-size: 14px; }
+
+  /* Experience cards: tighter padding, slightly smaller heading */
+  .exp-card{ padding: 22px 18px; border-radius: 16px; }
+  .exp-card h3{ font-size: 1.1rem; }
+  .exp-card .desc{ font-size: 13px; }
+  .exp-card .card-top{ margin-bottom: 16px; padding-bottom: 14px; }
+  .exp-card .company{ margin-bottom: 14px; padding-bottom: 14px; }
+  .exp-card .exp-tags{ margin-top: 14px; padding-top: 14px; }
+
+  /* Skills */
+  .skill-group, .edu-card, .lang-card{ padding: 20px 18px; }
+
+  /* Languages: keep 2 cols but smaller */
+  .lang-card .name{ font-size: 1.7rem; margin-bottom: 16px; }
+
+  /* Education */
+  .edu-card h3{ font-size: 1rem; }
+
+  /* Interests pills: a bit bigger touch area */
+  .pill{ padding: 8px 14px; font-size: 13.5px; }
+
+  /* Curiosities */
+  .curiosity-card{ min-height: 100px; padding: 16px; }
+  .c-icon{ width: 32px; height: 32px; font-size: 14px; }
+  .c-back{ padding: 16px; }
+  .c-back p{ font-size: 13px; }
+
+  /* Contact */
+  .contact-item{ padding: 16px; }
+  .contact-item .label{ font-size: 9.5px; }
+  .contact-item .val{ font-size: 13.5px; }
+  .contact-item .arrow-wrap{ width: 28px; height: 28px; }
+
+  /* Side nav: trim 1 px so the pill comfortably fits 6 items on a 360-px-wide screen */
+  .side-nav{ padding: 4px; }
+  .side-nav .nav-icon{ width: 40px; height: 40px; }
+  .side-nav .nav-icon svg{ width: 18px; height: 18px; }
+  .theme-toggle{ width: 42px; height: 42px; }
+
+  /* Filter bar even tighter */
+  .filter-bar button{ padding: 9px 12px; font-size: 11px; }
+
+  /* Methodology steps even tighter */
+  .method-steps li{ font-size: 13px; padding: 12px; }
+
+  /* Hide trail entirely on small phones — it was overwhelming there */
+  .dot-trail{ display: none; }
+}
+
+/* ----------- SMALL PHONE (≤ 360px — iPhone SE 1st gen, older Androids) ----------- */
+@media (max-width: 360px){
+  .content-section{ padding: 44px 12px; }
+  .content-card, .contact-card{ padding: 22px 16px; }
+  .exp-head-wrap{ padding: 0 12px; }
+  .exp-scroll-sticky{ padding: 0 12px; }
+
+  .hero{ padding: 0 14px; }
+  .hero-name{ font-size: clamp(2.1rem, 13vw, 3.4rem); }
+  .hero-tagline{ font-size: 0.95rem; }
+
+  .section-title{ font-size: clamp(1.4rem, 7.5vw, 2rem); }
+
+  /* Languages stack on truly tiny screens — 2-col was getting cramped */
+  .lang-grid{ grid-template-columns: 1fr; }
+
+  /* Side nav pill needs to stay within the screen */
+  .side-controls{ gap: 6px; max-width: calc(100% - 16px); }
+  .side-nav{ padding: 3px; }
+  .side-nav .nav-icon{ width: 38px; height: 38px; }
+  .theme-toggle{ width: 40px; height: 40px; }
+  .theme-toggle svg{ width: 16px; height: 16px; }
+
+  .pill{ font-size: 13px; padding: 7px 12px; }
+
+  /* Vertical spacers nearly disappear */
+  .vspace-lg{ height: 8vh; min-height: 40px; }
+  .vspace-md{ height: 5vh; min-height: 28px; }
+}
+
+/* ----------- LANDSCAPE PHONE (height-constrained) -----------
+   When a phone is rotated landscape, the hero's 100dvh becomes very short.
+   We tighten things so the name+tagline+scroll-down still fit. */
+@media (max-height: 500px) and (orientation: landscape){
+  .hero{ min-height: 100vh; padding: 16px 24px; }
+  .hero-badge{ margin-bottom: 14px; }
+  .hero-name{ margin-bottom: 12px; font-size: clamp(2rem, 7vw, 3.5rem); }
+  .hero-tagline{ margin-bottom: 18px; min-height: 2.6em; font-size: 0.95rem; }
+  .scroll-down{ font-size: 10px; }
+  .scroll-down .arrow{ width: 34px; height: 34px; }
+
+  /* In landscape, side-controls goes back to the side to save vertical space */
+  .side-controls{
+    left: max(16px, env(safe-area-inset-left));
+    bottom: auto;
+    top: 50%;
+    transform: translateY(-50%);
+    flex-direction: column;
+    max-width: none;
+  }
 }
